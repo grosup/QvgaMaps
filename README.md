@@ -1,6 +1,8 @@
 # Nokia 225 4G Maps
 
 A server-side rendered map application for Nokia 225 4G and other feature phones with 320x240 QVGA screens.
+TIP: If you are having trouble to open the native browser hete is the trick:
+Open opera mini, go to https://grosup.eu/px.png, push the open button and whoala the native browser opens.
 
 ![gmap](https://github.com/user-attachments/assets/291b7b25-37dc-45d6-8399-2f46d5bb6157)
 
