@@ -5,4 +5,6 @@
 .ftp.txt
 /deploy.php
 /CLAUDE.md
-/config.php
+/src/config.php
+/run-claude.bat
+/node_modules

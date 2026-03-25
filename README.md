@@ -4,7 +4,6 @@ A server-side rendered map application for Nokia 225 4G and other feature phones
 
 ![gmap](https://github.com/user-attachments/assets/291b7b25-37dc-45d6-8399-2f46d5bb6157)
 
-
 ## ✨ Features
 
 - 🗺️ **Static map display** (Mapbox Static Images API)
@@ -60,6 +59,7 @@ https://yourdomain.com/gmap/tools/requirements-check.php
 ```
 
 Enter your Mapbox token to test:
+
 - ✅ Token format validation
 - ✅ API connectivity test
 - ✅ All required PHP extensions
@@ -97,6 +97,7 @@ You should see a map of Berlin with controls and search box.
 ## ✨ What's New
 
 ### Requirements Checker
+
 New diagnostic tool that tests your token and hosting before deployment:
 
 - Enter token and verify it works
@@ -109,6 +110,7 @@ New diagnostic tool that tests your token and hosting before deployment:
 **Access it via:** `tools/requirements-check.php`
 
 ### Dynamic Titles with Reverse Geocoding
+
 Page titles now show human-readable location names instead of just "Map":
 
 **Before:** `<title>Map</title>`
@@ -118,6 +120,7 @@ Page titles now show human-readable location names instead of just "Map":
 Automatically converts coordinates to location names using Mapbox Geocoding API with 1-hour caching.
 
 ### Clickable Map Style Links
+
 Changed from radio buttons + SET button to simple text links. The currently active style appears in a different color and is not clickable.
 
 **Before:** Radio buttons + SET button
@@ -137,8 +140,8 @@ Changed from radio buttons + SET button to simple text links. The currently acti
 Edit these values in `class/MapSession.php`:
 
 ```php
-const DEFAULT_LAT = 52.52;   // Default: Berlin
-const DEFAULT_LON = 13.40;
+const DEFAULT_LAT = 52.52; // Default: Berlin
+const DEFAULT_LON = 13.4;
 const DEFAULT_ZOOM = 14;
 ```
 
@@ -172,15 +175,15 @@ const DEFAULT_ZOOM = 14;
 
 ## 🛠️ Troubleshooting
 
-| Problem | Solution |
-|---------|----------|
-| Blank map | Check Mapbox token in `config.php` |
-| Search fails | Verify `allow_url_fopen` is enabled in PHP |
-| Cache errors | Create `cache/` directory with 755 permissions |
-| Geocoding fails | Check Mapbox token has Geocoding API permissions |
-| Out of memory | Increase `memory_limit` in PHP to 32M+ |
+| Problem             | Solution                                                 |
+| ------------------- | -------------------------------------------------------- |
+| Blank map           | Check Mapbox token in `config.php`                       |
+| Search fails        | Verify `allow_url_fopen` is enabled in PHP               |
+| Cache errors        | Create `cache/` directory with 755 permissions           |
+| Geocoding fails     | Check Mapbox token has Geocoding API permissions         |
+| Out of memory       | Increase `memory_limit` in PHP to 32M+                   |
 | Styles not changing | Verify `controller/mapstyle.php` accessible and writable |
-| No map image | Use `tools/requirements-check.php` to diagnose |
+| No map image        | Use `tools/requirements-check.php` to diagnose           |
 
 ## 📊 System Requirements
 

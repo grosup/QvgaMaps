@@ -14,7 +14,7 @@ use NokiaMaps\Session\MapSession;
 $session = new MapSession();
 
 // Get selected map style from GET or POST
-$style = $_GET['map_style'] ?? $_POST['map_style'] ?? '';
+$style = $_GET['map_style'] ?? ($_POST['map_style'] ?? '');
 
 // Validate and set style
 if (!empty($style)) {

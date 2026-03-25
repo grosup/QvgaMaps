@@ -6,4 +6,7 @@
  */
 
 // Paste your Mapbox token here:
-define('MAPBOX_TOKEN', 'pk.eyJ1IjoidGdyb3N1hCIsImEiOiJjbWtzNmVneDMwYzU2Mm9HejdranGud2RmIn0.UCf8vvGhYa1wfKjPpF6Pig');
+define(
+    'MAPBOX_TOKEN',
+    '',
+);

@@ -9,7 +9,7 @@ session_start();
 // Initialize default session values if not set
 if (!isset($_SESSION['lat'])) {
     $_SESSION['lat'] = 52.52;
-    $_SESSION['lon'] = 13.40;
+    $_SESSION['lon'] = 13.4;
     $_SESSION['zoom'] = 14;
 }
 
@@ -35,23 +35,25 @@ if ($hasSelect && isset($_GET['select']) && is_numeric($_GET['select'])) {
     // First, we need to fetch the search results to know what was selected
     if (!empty($address)) {
         // We'll do the search again to populate results
-        $url = "https://nominatim.openstreetmap.org/search?" .
-            "q=" . urlencode($address) .
-            "&format=json" .
-            "&limit=5" .
-            "&addressdetails=1";
+        $url =
+            'https://nominatim.openstreetmap.org/search?' .
+            'q=' .
+            urlencode($address) .
+            '&format=json' .
+            '&limit=5' .
+            '&addressdetails=1';
 
         $context = stream_context_create([
             'http' => [
-                'header' => "User-Agent: Nokia225MapApp/1.0\r\n"
-            ]
+                'header' => "User-Agent: Nokia225MapApp/1.0\r\n",
+            ],
         ]);
 
         $response = @file_get_contents($url, false, $context);
 
         if ($response !== false) {
             $results = json_decode($response, true);
-            $selectIndex = (int)$_GET['select'];
+            $selectIndex = (int) $_GET['select'];
 
             if (isset($results[$selectIndex])) {
                 $selected = $results[$selectIndex];
@@ -61,28 +63,30 @@ if ($hasSelect && isset($_GET['select']) && is_numeric($_GET['select'])) {
                 header('Location: ../index.php');
                 exit();
             } else {
-                $error = "Invalid selection.";
+                $error = 'Invalid selection.';
             }
         } else {
-            $error = "Search failed. Please try again.";
+            $error = 'Search failed. Please try again.';
         }
     } else {
-        $error = "No address provided.";
+        $error = 'No address provided.';
     }
 }
 
 // Perform the search
-if (!empty($address) && (!$hasSelect)) {
-    $url = "https://nominatim.openstreetmap.org/search?" .
-        "q=" . urlencode($address) .
-        "&format=json" .
-        "&limit=5" .
-        "&addressdetails=1";
+if (!empty($address) && !$hasSelect) {
+    $url =
+        'https://nominatim.openstreetmap.org/search?' .
+        'q=' .
+        urlencode($address) .
+        '&format=json' .
+        '&limit=5' .
+        '&addressdetails=1';
 
     $context = stream_context_create([
         'http' => [
-            'header' => "User-Agent: Nokia225MapApp/1.0\r\n"
-        ]
+            'header' => "User-Agent: Nokia225MapApp/1.0\r\n",
+        ],
     ]);
 
     $response = @file_get_contents($url, false, $context);
@@ -94,7 +98,7 @@ if (!empty($address) && (!$hasSelect)) {
         $_SESSION['search_results'] = $results;
         $_SESSION['search_address'] = $address;
     } else {
-        $error = "Search failed. Please try again.";
+        $error = 'Search failed. Please try again.';
     }
 }
 
@@ -134,7 +138,9 @@ if (!empty($error)) {
     <h2>Search Results for "<?= htmlspecialchars($address) ?>":</h2>
     <?php foreach ($results as $index => $result): ?>
         <div class="result">
-            <a href="../controller/search.php?select=<?= $index ?>&address=<?= urlencode($address) ?>">
+            <a href="../controller/search.php?select=<?= $index ?>&address=<?= urlencode(
+    $address,
+) ?>">
                 <?= htmlspecialchars($result['display_name']) ?>
 				</a>
 			</div>

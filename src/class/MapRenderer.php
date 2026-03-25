@@ -70,7 +70,7 @@ class MapRenderer
             $zoom,
             $width,
             $height,
-            $token
+            $token,
         );
 
         $cacheDir = __DIR__ . '/../cache';
@@ -99,7 +99,10 @@ class MapRenderer
 
         if ($httpCode === 200 && $imageData !== false) {
             // Check if response is HTML (error)
-            if (strpos($imageData, '<!DOCTYPE') !== false || strpos($imageData, '<html') !== false) {
+            if (
+                strpos($imageData, '<!DOCTYPE') !== false ||
+                strpos($imageData, '<html') !== false
+            ) {
                 // Error response
                 error_log('Mapbox API error response');
                 return $this->generatePlaceholder();
@@ -222,7 +225,7 @@ class MapRenderer
             'https://api.mapbox.com/geocoding/v5/mapbox.places/%s,%s.json?access_token=%s&limit=1',
             $lon,
             $lat,
-            $this->mapboxToken
+            $this->mapboxToken,
         );
 
         $ch = curl_init($url);
@@ -260,7 +263,7 @@ class MapRenderer
 
         $cacheData = [
             'place_name' => $placeName,
-            'timestamp' => time()
+            'timestamp' => time(),
         ];
 
         file_put_contents($cacheFile, json_encode($cacheData));
