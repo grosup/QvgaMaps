@@ -1,13 +1,13 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use NokiaMaps\Navigation\MapController;
-use NokiaMaps\Session\MapSession;
+use NokiaMaps\Controller\NavigationController;
+use NokiaMaps\Session\Session;
 
 class MapControllerTest extends TestCase
 {
-    private MapController $controller;
-    private MapSession $session;
+    private NavigationController $controller;
+    private Session $session;
 
     protected function setUp(): void
     {
@@ -22,8 +22,8 @@ class MapControllerTest extends TestCase
         session_write_close();
         session_start();
 
-        $this->session = new MapSession();
-        $this->controller = new MapController($this->session);
+        $this->session = new Session();
+        $this->controller = new NavigationController($this->session);
     }
 
     protected function tearDown(): void

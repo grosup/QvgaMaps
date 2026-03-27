@@ -1,0 +1,22 @@
+<?php
+/**
+ * Map Navigation Controller
+ * OOP implementation for handling button presses and navigation
+ */
+
+require_once __DIR__ . '/../class/Session.php';
+require_once __DIR__ . '/../class/controller/NavigationController.php';
+
+use NokiaMaps\Session\Session;
+use NokiaMaps\Controller\NavigationController;
+
+// Initialize session
+$session = new Session();
+
+// Handle navigation request
+$controller = new NavigationController($session);
+$controller->handleNavigation();
+
+// Redirect to map view
+header('Location: ../index.php');
+exit();

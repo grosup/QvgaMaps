@@ -1,23 +1,24 @@
 <?php
 /**
- * Map Interface - Object-Oriented Implementation
+ * Map Application Entry Point
+ * Uses MVC pattern: Controller prepares data, View template handles presentation
  */
 
 require_once 'config.php';
-require_once 'class/MapSession.php';
-require_once 'class/MapRenderer.php';
-require_once 'class/MapView.php';
+require_once 'class/Session.php';
+require_once 'class/Renderer.php';
+require_once 'class/controller/MapPageController.php';
 
-use NokiaMaps\Session\MapSession;
-use NokiaMaps\Renderer\MapRenderer;
-use NokiaMaps\View\MapView;
+use NokiaMaps\Session\Session;
+use NokiaMaps\Renderer\Renderer;
+use NokiaMaps\Controller\MapPageController;
 
 // Initialize session
-$session = new MapSession();
+$session = new Session();
 
 // Initialize renderer using token from config
-$renderer = new MapRenderer($session, MAPBOX_TOKEN);
+$renderer = new Renderer($session, MAPBOX_TOKEN);
 
-// Render the map interface
-$view = new MapView($session, $renderer);
-$view->render();
+// Use controller to handle the request and render the page
+$controller = new MapPageController($session, $renderer);
+$controller->render();

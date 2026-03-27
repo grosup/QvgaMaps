@@ -6,7 +6,7 @@
 
 namespace NokiaMaps\Session;
 
-class MapSession
+class Session
 {
     private const DEFAULT_LAT = 52.52; // Berlin
     private const DEFAULT_LON = 13.4;

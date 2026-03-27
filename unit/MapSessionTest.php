@@ -1,11 +1,11 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use NokiaMaps\Session\MapSession;
+use NokiaMaps\Session\Session;
 
 class MapSessionTest extends TestCase
 {
-    private MapSession $session;
+    private Session $session;
     private array $originalSession;
 
     protected function setUp(): void
@@ -32,7 +32,7 @@ class MapSessionTest extends TestCase
 
     public function testConstructorInitializesDefaultCoordinates(): void
     {
-        $session = new MapSession();
+        $session = new Session();
         $coords = $session->getCoordinates();
 
         $this->assertEquals(52.52, $coords['lat']);
@@ -42,7 +42,7 @@ class MapSessionTest extends TestCase
 
     public function testSetAndGetCoordinates(): void
     {
-        $session = new MapSession();
+        $session = new Session();
         $session->setCoordinates(48.8566, 2.3522, 10);
 
         $coords = $session->getCoordinates();
@@ -53,7 +53,7 @@ class MapSessionTest extends TestCase
 
     public function testMoveLeft(): void
     {
-        $session = new MapSession();
+        $session = new Session();
         $session->setCoordinates(52.52, 13.4, 14);
 
         $session->moveLeft();
@@ -66,7 +66,7 @@ class MapSessionTest extends TestCase
 
     public function testMoveRight(): void
     {
-        $session = new MapSession();
+        $session = new Session();
         $session->setCoordinates(52.52, 13.4, 14);
 
         $session->moveRight();
@@ -79,7 +79,7 @@ class MapSessionTest extends TestCase
 
     public function testMoveUp(): void
     {
-        $session = new MapSession();
+        $session = new Session();
         $session->setCoordinates(52.52, 13.4, 14);
 
         $session->moveUp();
@@ -92,7 +92,7 @@ class MapSessionTest extends TestCase
 
     public function testMoveDown(): void
     {
-        $session = new MapSession();
+        $session = new Session();
         $session->setCoordinates(52.52, 13.4, 14);
 
         $session->moveDown();
@@ -105,7 +105,7 @@ class MapSessionTest extends TestCase
 
     public function testZoomIn(): void
     {
-        $session = new MapSession();
+        $session = new Session();
 
         // Zoom from default 14 to 15
         $session->zoomIn();
@@ -115,7 +115,7 @@ class MapSessionTest extends TestCase
 
     public function testZoomOut(): void
     {
-        $session = new MapSession();
+        $session = new Session();
 
         // Zoom from default 14 to 13
         $session->zoomOut();
@@ -125,7 +125,7 @@ class MapSessionTest extends TestCase
 
     public function testZoomInAtMaxZoom(): void
     {
-        $session = new MapSession();
+        $session = new Session();
         $session->setCoordinates(52.52, 13.4, 22); // Set at max zoom
 
         $session->zoomIn(); // Should not change
@@ -135,7 +135,7 @@ class MapSessionTest extends TestCase
 
     public function testZoomOutAtMinZoom(): void
     {
-        $session = new MapSession();
+        $session = new Session();
         $session->setCoordinates(52.52, 13.4, 1); // Set at min zoom
 
         $session->zoomOut(); // Should not change
@@ -145,7 +145,7 @@ class MapSessionTest extends TestCase
 
     public function testSetZoomWithinBounds(): void
     {
-        $session = new MapSession();
+        $session = new Session();
 
         // Test setting zoom to various levels within bounds
         $session->setZoom(5);
@@ -163,7 +163,7 @@ class MapSessionTest extends TestCase
 
     public function testMovementVariesByZoom(): void
     {
-        $session = new MapSession();
+        $session = new Session();
 
         // Test different zoom levels have different movement amounts
         $session->setCoordinates(0, 0, 10);
@@ -185,7 +185,7 @@ class MapSessionTest extends TestCase
 
     public function testMapStyle(): void
     {
-        $session = new MapSession();
+        $session = new Session();
 
         // Default style
         $this->assertEquals('streets-v12', $session->getMapStyle());

@@ -7,17 +7,17 @@
 session_start();
 
 require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../class/MapSession.php';
-require_once __DIR__ . '/../class/MapRenderer.php';
+require_once __DIR__ . '/../class/Session.php';
+require_once __DIR__ . '/../class/Renderer.php';
 
-use NokiaMaps\Session\MapSession;
-use NokiaMaps\Renderer\MapRenderer;
+use NokiaMaps\Session\Session;
+use NokiaMaps\Renderer\Renderer;
 
 // Initialize session
-$session = new MapSession();
+$session = new Session();
 
 // Create renderer using token from config
-$renderer = new MapRenderer($session, MAPBOX_TOKEN);
+$renderer = new Renderer($session, MAPBOX_TOKEN);
 
 // Output map image
 $renderer->renderImage();

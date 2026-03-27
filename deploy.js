@@ -19,7 +19,7 @@ const config = {
         "config.php.example",
     ],
     // delete ALL existing files at destination before uploading, if true
-    deleteRemote: false,
+    deleteRemote: true,
     // Passive mode is forced (EPSV command is not sent)
     forcePasv: true,
     // use sftp or ftp

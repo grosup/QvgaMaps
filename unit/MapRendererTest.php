@@ -1,13 +1,13 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use NokiaMaps\Renderer\MapRenderer;
-use NokiaMaps\Session\MapSession;
+use NokiaMaps\Renderer\Renderer;
+use NokiaMaps\Session\Session;
 
 class MapRendererTest extends TestCase
 {
-    private MapRenderer $renderer;
-    private MapSession $session;
+    private Renderer $renderer;
+    private Session $session;
     private string $tempCacheDir;
 
     protected function setUp(): void
@@ -20,7 +20,7 @@ class MapRendererTest extends TestCase
         session_write_close();
         session_start();
 
-        $this->session = new MapSession();
+        $this->session = new Session();
 
         // We'll avoid direct testing of renderImage as it calls exit()
     }
@@ -32,15 +32,15 @@ class MapRendererTest extends TestCase
 
     public function testConstructorSetsTokenAndSession(): void
     {
-        $this->renderer = new MapRenderer($this->session, 'test-token-123');
+        $this->renderer = new Renderer($this->session, 'test-token-123');
 
         // Can't directly test private properties, but we can test behavior
-        $this->assertInstanceOf(MapRenderer::class, $this->renderer);
+        $this->assertInstanceOf(Renderer::class, $this->renderer);
     }
 
     public function testReverseGeocodeWithoutTokenReturnsEmptyString(): void
     {
-        $this->renderer = new MapRenderer($this->session, '');
+        $this->renderer = new Renderer($this->session, '');
         $result = $this->renderer->reverseGeocode(52.52, 13.4);
 
         $this->assertEquals('', $result);
@@ -48,7 +48,7 @@ class MapRendererTest extends TestCase
 
     public function testReverseGeocodeWithValidToken(): void
     {
-        $this->renderer = new MapRenderer($this->session, 'test-token');
+        $this->renderer = new Renderer($this->session, 'test-token');
 
         // Mock cURL operations would be needed for actual API calls
         // For unit testing, we'll test the public method signature
@@ -60,17 +60,17 @@ class MapRendererTest extends TestCase
 
     public function testGeneratePlaceholderCreatesValidImage(): void
     {
-        $this->renderer = new MapRenderer($this->session, '');
+        $this->renderer = new Renderer($this->session, '');
 
         // Create a minimal test to verify placeholder generation works
         // This would require mocking the private method or testing indirectly
 
-        $this->assertInstanceOf(MapRenderer::class, $this->renderer);
+        $this->assertInstanceOf(Renderer::class, $this->renderer);
     }
 
-    public function testMapRendererWithDifferentCoordinates(): void
+    public function testRendererWithDifferentCoordinates(): void
     {
-        $this->renderer = new MapRenderer($this->session, 'test-token');
+        $this->renderer = new Renderer($this->session, 'test-token');
 
         // Set different coordinates
         $this->session->setCoordinates(48.8566, 2.3522, 10);
@@ -85,7 +85,7 @@ class MapRendererTest extends TestCase
     public function testMapStyleGetsApplied(): void
     {
         $this->session->setMapStyle('satellite-v9');
-        $this->renderer = new MapRenderer($this->session, 'test-token');
+        $this->renderer = new Renderer($this->session, 'test-token');
 
         // Verify style was set
         $this->assertEquals('satellite-v9', $this->session->getMapStyle());
@@ -94,7 +94,7 @@ class MapRendererTest extends TestCase
     public function testRendererHandlesEmptyStyle(): void
     {
         $this->session->setMapStyle('');
-        $this->renderer = new MapRenderer($this->session, '');
+        $this->renderer = new Renderer($this->session, '');
 
         // Should use default style internally
         $this->assertEquals('', $this->session->getMapStyle());
@@ -102,12 +102,12 @@ class MapRendererTest extends TestCase
 
     public function testFallbackToPlaceholderWithoutToken(): void
     {
-        $this->renderer = new MapRenderer($this->session, '');
+        $this->renderer = new Renderer($this->session, '');
 
         // Should fallback to placeholder generation
         // Can't directly test private generateMap method
         // But we can verify the renderer is created successfully
-        $this->assertInstanceOf(MapRenderer::class, $this->renderer);
+        $this->assertInstanceOf(Renderer::class, $this->renderer);
     }
 
     public function testSessionCoordinatesMatchRendererRequirement(): void
@@ -122,7 +122,7 @@ class MapRendererTest extends TestCase
 
         foreach ($testCases as $coords) {
             $this->session->setCoordinates($coords['lat'], $coords['lon'], $coords['zoom']);
-            $this->renderer = new MapRenderer($this->session, 'test-token');
+            $this->renderer = new Renderer($this->session, 'test-token');
 
             $sessionCoords = $this->session->getCoordinates();
             $this->assertEquals($coords['lat'], $sessionCoords['lat']);
@@ -143,7 +143,7 @@ class MapRendererTest extends TestCase
             $expectedCoords['zoom'],
         );
 
-        $this->renderer = new MapRenderer($this->session, 'test-token-xyz');
+        $this->renderer = new Renderer($this->session, 'test-token-xyz');
 
         // Verify session was properly passed to renderer
         // We can't access private property directly, so we test indirectly
@@ -160,7 +160,7 @@ class MapRendererTest extends TestCase
 
         foreach ($styles as $style) {
             $this->session->setMapStyle($style);
-            $this->renderer = new MapRenderer($this->session, 'test-token');
+            $this->renderer = new Renderer($this->session, 'test-token');
 
             $this->assertEquals($style, $this->session->getMapStyle());
         }
@@ -169,18 +169,18 @@ class MapRendererTest extends TestCase
     public function testCanCreateRendererWithoutToken(): void
     {
         // Should work with empty token and use placeholder
-        $renderer = new MapRenderer($this->session, '');
-        $this->assertInstanceOf(MapRenderer::class, $renderer);
+        $renderer = new Renderer($this->session, '');
+        $this->assertInstanceOf(Renderer::class, $renderer);
 
         // Should work with just session (default parameter)
-        $renderer2 = new MapRenderer($this->session);
-        $this->assertInstanceOf(MapRenderer::class, $renderer2);
+        $renderer2 = new Renderer($this->session);
+        $this->assertInstanceOf(Renderer::class, $renderer2);
     }
 
     public function testRendererConstructorTypeHints(): void
     {
         // Verify that constructor accepts correct types
-        $this->assertInstanceOf(MapRenderer::class, new MapRenderer($this->session, 'token'));
-        $this->assertInstanceOf(MapRenderer::class, new MapRenderer($this->session));
+        $this->assertInstanceOf(Renderer::class, new Renderer($this->session, 'token'));
+        $this->assertInstanceOf(Renderer::class, new Renderer($this->session));
     }
 }

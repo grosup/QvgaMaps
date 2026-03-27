@@ -4,15 +4,15 @@
  * Handles button press actions and navigation logic
  */
 
-namespace NokiaMaps\Navigation;
+namespace NokiaMaps\Controller;
 
-use NokiaMaps\Session\MapSession;
+use NokiaMaps\Session\Session;
 
-class MapController
+class NavigationController
 {
     private $session;
 
-    public function __construct(MapSession $session)
+    public function __construct(Session $session)
     {
         $this->session = $session;
     }

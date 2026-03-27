@@ -6,14 +6,14 @@
 
 namespace NokiaMaps\Renderer;
 
-use NokiaMaps\Session\MapSession;
+use NokiaMaps\Session\Session;
 
-class MapRenderer
+class Renderer
 {
-    private MapSession $session;
+    private Session $session;
     private string $mapboxToken;
 
-    public function __construct(MapSession $session, string $mapboxToken = '')
+    public function __construct(Session $session, string $mapboxToken = '')
     {
         $this->session = $session;
         $this->mapboxToken = $mapboxToken;
