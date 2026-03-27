@@ -1,17 +1,17 @@
 <?php
 /**
  * Search Endpoint
- * Simple wrapper that instantiates SearchController and handles the request
+ * Simple wrapper that instantiates SearchPageController and handles the request
  */
 
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../class/GeocodingService.php';
-require_once __DIR__ . '/../class/controller/SearchController.php';
+require_once __DIR__ . '/../class/controller/SearchPageController.php';
 
-use NokiaMaps\Controller\SearchController;
+use NokiaMaps\Controller\SearchPageController;
 
 session_start();
 
 // Create controller and handle request
-$controller = new SearchController(MAPBOX_TOKEN);
+$controller = new SearchPageController(MAPBOX_TOKEN);
 $controller->handle();

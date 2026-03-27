@@ -32,7 +32,7 @@ $classFiles = [
     __DIR__ . '/../src/class/Renderer.php',
     __DIR__ . '/../src/class/GeocodingService.php',
     __DIR__ . '/../src/class/controller/MapPageController.php',
-    __DIR__ . '/../src/class/controller/SearchController.php',
+    __DIR__ . '/../src/class/controller/SearchPageController.php',
     __DIR__ . '/../src/class/controller/StyleController.php',
 ];
 

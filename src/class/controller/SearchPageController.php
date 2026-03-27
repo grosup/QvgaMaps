@@ -8,7 +8,7 @@ namespace NokiaMaps\Controller;
 
 use NokiaMaps\Service\GeocodingService;
 
-class SearchController
+class SearchPageController
 {
     private GeocodingService $geocodingService;
 
