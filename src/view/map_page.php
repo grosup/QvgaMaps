@@ -23,13 +23,13 @@
  <input type="submit" value="SEARCH" data-testid="search-submit" style="padding:7px 5px 3px 5px; font-size:11px; background:#007bff; color: white; border: 1px solid #007bff;">
 	<select name="geocoding_api" data-testid="geocoding-api-select" style="font-size:10px; width:45px; padding:0px 0 0 0; margin-left:2px; border:1px solid #ccc;">
 	<option value="mapbox"<?= isset($_SESSION['geocoding_api']) &&
-	$_SESSION['geocoding_api'] === 'mapbox'
-		? ' selected'
-		: '' ?>>MB</option>
+ $_SESSION['geocoding_api'] === 'mapbox'
+     ? ' selected'
+     : '' ?>>MB</option>
 	<option value="nominatim"<?= isset($_SESSION['geocoding_api']) &&
-	$_SESSION['geocoding_api'] === 'nominatim'
-		? ' selected'
-		: '' ?>>NM</option>
+ $_SESSION['geocoding_api'] === 'nominatim'
+     ? ' selected'
+     : '' ?>>NM</option>
 	</select>
 </form>
 
