@@ -34,6 +34,9 @@ class Session
             $_SESSION['zoom'] = self::DEFAULT_ZOOM;
             $_SESSION['map_style'] = 'streets-v12'; // Default Mapbox style
             $_SESSION['geocoding_api'] = self::DEFAULT_GEOCODING_API; // Default geocoding service
+            $_SESSION['markers'] = []; // Initialize empty markers array
+        } elseif (!isset($_SESSION['markers'])) {
+            $_SESSION['markers'] = [];
         }
     }
 
@@ -164,5 +167,63 @@ class Session
 
         $currentZoom = $this->session['zoom'];
         return $coefficients[$currentZoom] ?? 0.24;
+    }
+
+    /**
+     * Get all markers stored in session
+     * @return array Array of marker objects ['id', 'lat', 'lon', 'color', 'timestamp']
+     */
+    public function getMarkers(): array
+    {
+        return $this->session['markers'] ?? [];
+    }
+
+    /**
+     * Add a marker at the specified coordinates
+     * @param float $lat Latitude
+     * @param float $lon Longitude
+     * @param string $color Marker color in hex format (without #)
+     * @return void
+     */
+    public function addMarker(float $lat, float $lon, string $color): void
+    {
+        $markers = $this->session['markers'] ?? [];
+
+        $markers[] = [
+            'id' => uniqid('marker_', true),
+            'lat' => $lat,
+            'lon' => $lon,
+            'color' => $color,
+            'timestamp' => time(),
+        ];
+
+        $this->session['markers'] = $markers;
+    }
+
+    /**
+     * Clear all markers from session
+     * @return void
+     */
+    public function clearMarkers(): void
+    {
+        $this->session['markers'] = [];
+    }
+
+    /**
+     * Get the next marker color based on current marker count
+     * Cycles through MARKER_COLORS array
+     * @return string Color code in hex format (without #)
+     */
+    public function getNextMarkerColor(): string
+    {
+        $markers = $this->session['markers'] ?? [];
+        $count = count($markers);
+
+        if (!defined('MARKER_COLORS') || !is_array(MARKER_COLORS)) {
+            return 'FF0000'; // Fallback red
+        }
+
+        $colorIndex = $count % count(MARKER_COLORS);
+        return MARKER_COLORS[$colorIndex] ?? 'FF0000';
     }
 }

@@ -64,10 +64,29 @@ class Renderer
         $height = 250;
         $scale = 1;
 
+        // Build markers overlay if any markers exist
+        $markers = $this->session->getMarkers();
+        $markerOverlay = '';
+
+        if (!empty($markers)) {
+            $markerParts = [];
+            foreach ($markers as $marker) {
+                // Mapbox format: pin-s+COLOR(LON,LAT)
+                $markerParts[] = sprintf(
+                    'pin-s+%s(%s,%s)',
+                    $marker['color'],
+                    $marker['lon'],
+                    $marker['lat'],
+                );
+            }
+            $markerOverlay = implode(',', $markerParts) . '/';
+        }
+
         // Build Mapbox Static Images API URL
         $url = sprintf(
-            'https://api.mapbox.com/styles/v1/mapbox/%s/static/%s,%s,%s,0/%dx%d?access_token=%s',
+            'https://api.mapbox.com/styles/v1/mapbox/%s/static/%s%s,%s,%s,0/%dx%d?access_token=%s',
             $style,
+            $markerOverlay,
             $lon,
             $lat,
             $zoom,

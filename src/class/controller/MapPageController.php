@@ -18,6 +18,19 @@ class MapPageController
     {
         $this->session = $session;
         $this->renderer = $renderer;
+
+        // Load markers from cookie if available
+        if (isset($_COOKIE['nokiamaps_markers'])) {
+            $markersJson = $_COOKIE['nokiamaps_markers'];
+            $markers = json_decode($markersJson, true);
+
+            if (is_array($markers) && !empty($markers)) {
+                // Restore markers to session
+                foreach ($markers as $marker) {
+                    $this->session->addMarker($marker['lat'], $marker['lon'], $marker['color']);
+                }
+            }
+        }
     }
 
     /**
